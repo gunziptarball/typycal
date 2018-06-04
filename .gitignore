@@ -1,0 +1,10 @@
+.idea/
+**/*.pyc
+docs/_build/
+.cache
+__pycache__/
+tests/__pycache__/
+typycal/__pycache__/
+build/
+dist/
+MANIFEST
