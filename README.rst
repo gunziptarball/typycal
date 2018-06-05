@@ -11,14 +11,6 @@ Developers working with REST APIs or any data loaded as a dictionary can use
 typycal to effectively design "contracts" with their code, and ideally end up
 with more readable software
 
------
-Usage
------
-
-.. testsetup:: *
-
-  import typycal
-
 ^^^^^^^^^^^^^^
 ``typed_dict``
 ^^^^^^^^^^^^^^
@@ -34,7 +26,7 @@ project as a dictionary (such as `json.load`, `yaml.safe_load`, etc...):
             "password": "SECRET",
             "port": "5432",
             "use_ssl": false
-        }
+        },
         "log_level": "DEBUG"
     }
 
@@ -74,7 +66,7 @@ True
 >>> config.db.port == 5432
 True
 
-See that?  Even though you passed a string for the port, because you explicity defined the type, it was cast for you!
+See that?  Even though you passed a string for the port, because you explicitly defined the type, it was cast for you!
 Now, let's try to access a missing property
 
 >>> config.db.use_ssl is None
