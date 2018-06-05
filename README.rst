@@ -131,6 +131,28 @@ Nesting and types are honored as well!
 True
 
 ----------
+Releasing
+----------
+First ensure that :code:`~/.pypirc` is present
+
+.. code-block::
+
+  [distutils]
+  index-servers =
+      pypi
+  [pypi]
+  repository:https://pypi.python.org/pypi
+  username:cardinal-health
+  password:<password>
+
+Then run tests and push the release
+
+.. code-block::
+
+  python3 -m pytest
+  setup.py sdist upload
+
+----------
 Change Log
 ----------
 
