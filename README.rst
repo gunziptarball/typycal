@@ -2,6 +2,12 @@
 `typycal` -- A handy tool to make type-aware classes
 ====================================================
 
+.. image:: https://img.shields.io/pypi/v/typycal.svg
+    :target: https://pypi.org/project/typycal/
+
+.. image:: https://img.shields.io/pypi/pyversions/typycal.svg
+    :target: https://pypi.org/project/typycal/
+
 This lightweight library is for the developer who enjoys the assistance provided
 by Python's type annotations.  It offers a simple, declarative means of
 converting a plain Python dictionary or string object into a type-aware object,
