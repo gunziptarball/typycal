@@ -8,3 +8,4 @@ typycal/__pycache__/
 build/
 dist/
 MANIFEST
+.coverage
