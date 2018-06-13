@@ -8,6 +8,13 @@
 .. image:: https://img.shields.io/pypi/pyversions/typycal.svg
     :target: https://pypi.org/project/typycal/
 
+.. image:: https://travis-ci.org/cardinal-health/typycal.svg?branch=master
+    :target: https://travis-ci.org/cardinal-health/typycal
+
+.. image:: https://coveralls.io/repos/github/cardinal-health/typycal/badge.svg?branch=master
+    :target: https://coveralls.io/github/cardinal-health/typycal?branch=master
+
+
 This lightweight library is for the developer who enjoys the assistance provided
 by Python's type annotations.  It offers a simple, declarative means of
 converting a plain Python dictionary or string object into a type-aware object,
