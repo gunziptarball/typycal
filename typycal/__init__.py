@@ -1,11 +1,16 @@
-import typing
+import functools
 import re
+import typing
 
-# noinspection PyProtectedMember
-from typycal.lib import _add_typed_property, _InitializedKeys
+_named_group_ptn = re.compile(r'\(\?P<([a-zA-Z0-9_]+)>')
 
 _DICT_BUILTINS = set(dict.__dict__.keys())
 
+_PROPERTY_FACTORY = {
+    typing.MutableSequence: None
+}
+
+_MetaType = getattr(typing, '_GenericAlias', getattr(typing, 'GenericMeta', None))
 
 # noinspection PyPep8Naming
 class typed_str:
@@ -87,6 +92,36 @@ class typed_dict(object):
         self.initialize_with_none = initialize_with_none
         self.strict = strict
 
+    def _add_typed_property(self, cls: typing.Type[dict], attr_name: str, attr_type: typing.Optional[typing.Type]):
+        # getter
+        getter = self._create_typed_getter(cls, attr_name)
+
+        # setter
+        setter = self._create_typed_setter(attr_name, attr_type)
+
+        setattr(cls, attr_name, property(getter, setter, dict.__delitem__))
+
+    def _create_typed_getter(self, cls, attr_name) -> typing.Callable[[dict], typing.Any]:
+        def getter(this: dict):
+            try:
+                return this[attr_name]
+            except KeyError:
+                pass
+            raise AttributeError("'{}' object has no attribute '{}'".format(cls.__name__, attr_name))
+
+        return getter
+
+    def _create_typed_setter(self, attr_name: str, attr_type: typing.Optional[typing.Type]) -> typing.Callable[
+        [dict, typing.Any], None]:
+        def setter(this: dict, val: typing.Any):
+            if val is not None and attr_type is not None and not isinstance(val, attr_type):
+                if self.strict:
+                    raise TypeError
+                val = attr_type(val)
+            this[attr_name] = val
+
+        return setter
+
     def __call__(self, cls: typing.Type[dict]):
         if dict not in cls.mro():
             raise TypeError('You cannot apply typed_dict to a non-dictionary class')
@@ -99,10 +134,10 @@ class typed_dict(object):
         for attr_name, attr_type in type_hints.items():
             # if the type for the hint is not usable for whatever reason,
             # don't try to wrap.
-            if not callable(attr_type) or isinstance(attr_type, typing.GenericMeta):
+            if not callable(attr_type) or isinstance(attr_type, _MetaType):
                 attr_type = None
             # add the property to the dictionary class.
-            _add_typed_property(cls, attr_name, attr_type, self.strict)
+            self._add_typed_property(cls, attr_name, attr_type)
 
         # allow the option to make sure a "None" value is set for all type-declared
         # attributes
@@ -171,3 +206,24 @@ class KeyedProperty(property):
             del obj[key]
 
         super().__init__(getter, setter, deleter, doc)
+
+
+class _InitializedKeys:
+    """simple decorator to make sure dict values are initialized"""
+
+    def __init__(self, keys: typing.Iterable[str], initialize_with_none: bool):
+        self.keys = keys
+        self.initialize_with_none = initialize_with_none
+
+    def __call__(self, func: typing.Callable):
+        @functools.wraps(func)
+        def wrapped(obj: dict, *args, **kwargs):
+            func(obj, *args, **kwargs)
+            for k in self.keys:
+                if k in obj:
+                    v = getattr(obj, k)
+                    setattr(obj, k, v)
+                elif self.initialize_with_none:
+                    setattr(obj, k, None)
+
+        return wrapped

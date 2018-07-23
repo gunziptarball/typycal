@@ -14,6 +14,9 @@
 .. image:: https://coveralls.io/repos/github/cardinal-health/typycal/badge.svg?branch=master
     :target: https://coveralls.io/github/cardinal-health/typycal?branch=master
 
+**NOTE:** Yes, Python 3.7 introduced data classes, which basically provide the
+majority of features this library offers.  Future development will likely cover helpers
+for this new feature.
 
 This lightweight library is for the developer who enjoys the assistance provided
 by Python's type annotations.  It offers a simple, declarative means of
