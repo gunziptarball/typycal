@@ -2,20 +2,17 @@ import functools
 import re
 import typing
 
-_named_group_ptn = re.compile(r'\(\?P<([a-zA-Z0-9_]+)>')
-
 _DICT_BUILTINS = set(dict.__dict__.keys())
-
-_PROPERTY_FACTORY = {
-    typing.MutableSequence: None
-}
 
 _MetaType = getattr(typing, '_GenericAlias', getattr(typing, 'GenericMeta', None))
 
+
 # noinspection PyPep8Naming
 class typed_str:
-    def __init__(self, pattern: str, *attrs):
+    def __init__(self, pattern: str, *attrs, template: str = None):
         self.pattern = re.compile(pattern)
+        self.template = template
+
         if not self.pattern.groups:
             raise ValueError(f'Pattern {pattern} does not contain any groups to match.')
 
@@ -46,6 +43,17 @@ class typed_str:
 
         return getter
 
+    def _make_setter(self, attr: str, t: typing.Type):
+        # noinspection PyMissingTypeHints
+        if not self.template:
+            return None
+
+        def setter(o, v):
+            # noinspection PyProtectedMember
+            o._matches[attr] = t(v)
+
+        return setter
+
     def __call__(self, cls: typing.Type[str]):
         attr_types = {}
         for attr_name, attr_type in typing.get_type_hints(cls).items():
@@ -62,8 +70,20 @@ class typed_str:
             if attr not in attr_types:
                 raise AttributeError(f'No type defined for attribute {attr}')
 
-            prop = property(self._make_getter(attr, attr_types[attr]))
+            prop = property(self._make_getter(attr, attr_types[attr]), self._make_setter(attr, attr_types[attr]))
             setattr(cls, attr, prop)
+
+        def _to_dict(this):
+            return {k: getattr(this, k) for k in self.attrs}
+
+        def _str(this):
+            # noinspection PyProtectedMember
+            return str(self.template.format(**this._to_dict()))
+
+        if self.template:
+            setattr(cls, '__str__', _str)
+            setattr(cls, '__repr__', _str)
+            setattr(cls, '_to_dict', _to_dict)
 
         # noinspection PyUnusedLocal
         def new_init(obj: str, *args, **kwargs):
@@ -101,7 +121,8 @@ class typed_dict(object):
 
         setattr(cls, attr_name, property(getter, setter, dict.__delitem__))
 
-    def _create_typed_getter(self, cls, attr_name) -> typing.Callable[[dict], typing.Any]:
+    @staticmethod
+    def _create_typed_getter(cls, attr_name) -> typing.Callable[[dict], typing.Any]:
         def getter(this: dict):
             try:
                 return this[attr_name]
@@ -151,6 +172,9 @@ class KeyedProperty(property):
     def __init__(self, key: str, doc: typing.Optional[str] = '', default: typing.Any = None, missing_keys_as_null=True):
         """
         Provides a way to give dictionary objects property-based access.
+
+        Really, you should just use data classes in Python 3.7 unless you really
+        need to keep your class as a dictionary.
 
         This is an alternative to using the ``@typed_dict`` class decorator.
 
@@ -227,3 +251,28 @@ class _InitializedKeys:
                     setattr(obj, k, None)
 
         return wrapped
+
+
+### utilities
+T = typing.TypeVar('T')
+
+
+def transform_lines(cls: typing.Type[T], lines_in: typing.Union[str, typing.Iterable[str]], strict=False) -> \
+        typing.Iterable[T]:
+    """
+    Utility function which takes a string or an iterable of strings, a "stringy" type and returns text
+
+    .. note::  see example in ``tests/cleaning_file_test.py``
+
+    """
+    if isinstance(lines_in, str):
+        yield from transform_lines(cls, lines_in.split('\n'), strict)
+    else:
+        for line in lines_in:
+            try:
+                # noinspection PyCallingNonCallable
+                yield str(cls(line))
+            except ValueError:
+                if strict:
+                    raise
+                yield line

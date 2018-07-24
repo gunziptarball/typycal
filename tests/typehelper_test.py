@@ -160,3 +160,15 @@ def test_cannot_define_reserved_types():
         @typycal.typed_dict
         class BadDict(dict):
             items: list
+
+
+def test_formatting():
+    @typycal.typed_str(r'^([0-9]+) things', 'qty', template='{qty} things')
+    class Things(str):
+        qty: int
+
+    things = Things('20 things')
+    assert things.qty == 20
+    things.qty = 50
+    assert things.qty == 50
+    assert str(things) == '50 things'

@@ -14,9 +14,11 @@
 .. image:: https://coveralls.io/repos/github/cardinal-health/typycal/badge.svg?branch=master
     :target: https://coveralls.io/github/cardinal-health/typycal?branch=master
 
-**NOTE:** Yes, Python 3.7 introduced data classes, which basically provide the
-majority of features this library offers.  Future development will likely cover helpers
-for this new feature.
+.. note::
+
+    Yes, Python 3.7 introduced data classes, which basically provide the
+    majority of features this library offers.  Future development will likely cover helpers
+    for this new feature.
 
 This lightweight library is for the developer who enjoys the assistance provided
 by Python's type annotations.  It offers a simple, declarative means of
@@ -138,6 +140,26 @@ Nesting and types are honored as well!
 >>> my_car.model.year == 1985
 True
 
+You can provide a template string as well to support (kinda) mutability.
+
+>>> @typed_str(r'^([0-9]+) things', 'qty', template='{qty} things')
+... class Things(str):
+...     qty:int
+
+>>> things = Things('20 things')
+>>> things.qty = 50
+>>> things
+50 things
+
+Note however, this only changes the behavior of ``__str__`` and ``__repr__``.  See the comparison of
+the "new" value vs the original string value:
+>>> things == '50 things', things == '20 things'
+(False, True)
+
+...so you'll need to explicity cast
+>>> str(things) == '50 things'
+True
+
 ----------
 Releasing
 ----------
@@ -164,21 +186,4 @@ Then run tests and push the release
 Change Log
 ----------
 
-All bugs/feature details can be found at:
-
-   https://github.com/cardinal-health/typycal/issues/XXXXX
-
-
-Where XXXXX is the 'Issue #' referenced below.
-
-^^^^^
-0.4.0
-^^^^^
-
-Initial Release
-
-~~~~~
-0.5.0
-~~~~~
-
-Python 3.7 Support
+See CHANGELOG.rst
