@@ -176,3 +176,9 @@ Where XXXXX is the 'Issue #' referenced below.
 ^^^^^
 
 Initial Release
+
+~~~~~
+0.5.0
+~~~~~
+
+Python 3.7 Support

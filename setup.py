@@ -14,7 +14,7 @@ setup(
     description='Easily add type intelligence to simple Python objects',
     long_description=readme,
     long_description_content_type='text/x-rst',
-    version='0.4.0',
+    version='0.5.0',
     packages=['typycal'],
     url='https://github.com/cardinal-health/typycal',
     author='Cardinal Health',
