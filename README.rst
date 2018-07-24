@@ -164,21 +164,4 @@ Then run tests and push the release
 Change Log
 ----------
 
-All bugs/feature details can be found at:
-
-   https://github.com/cardinal-health/typycal/issues/XXXXX
-
-
-Where XXXXX is the 'Issue #' referenced below.
-
-^^^^^
-0.4.0
-^^^^^
-
-Initial Release
-
-~~~~~
-0.5.0
-~~~~~
-
-Python 3.7 Support
+See CHANGELOG.rst
