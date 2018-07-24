@@ -153,10 +153,12 @@ You can provide a template string as well to support (kinda) mutability.
 
 Note however, this only changes the behavior of ``__str__`` and ``__repr__``.  See the comparison of
 the "new" value vs the original string value:
+
 >>> things == '50 things', things == '20 things'
 (False, True)
 
 ...so you'll need to explicity cast
+
 >>> str(things) == '50 things'
 True
 
