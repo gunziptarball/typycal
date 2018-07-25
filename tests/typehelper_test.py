@@ -1,7 +1,9 @@
 import typing
+
+import _pytest.monkeypatch
 import pytest
 from hamcrest import assert_that, equal_to, none
-
+import setup
 import typycal
 
 
@@ -172,3 +174,32 @@ def test_formatting():
     things.qty = 50
     assert things.qty == 50
     assert str(things) == '50 things'
+
+
+@pytest.mark.parametrize('travis_env,travis_tag_env', (
+        ('true', 'v0.5.1'),
+        ('false', 'v0.5.0')
+))
+def test_get_version_fails(travis_env, travis_tag_env, monkeypatch: _pytest.monkeypatch.MonkeyPatch):
+    import sys
+    if 'upload' in sys.argv:
+        sys.argv.remove('upload')
+    assert setup.verify_version('0.5.0') == '0.5.0'
+
+    sys.argv.append('upload')
+    monkeypatch.setenv('TRAVIS', travis_env)
+    monkeypatch.setenv('TRAVIS_TAG', travis_tag_env)
+    with pytest.raises(Exception):
+        setup.verify_version('0.5.0')
+
+
+def test_get_version_succeeds(monkeypatch: _pytest.monkeypatch.MonkeyPatch):
+    import sys
+    if 'upload' in sys.argv:
+        sys.argv.remove('upload')
+    assert setup.verify_version('0.5.1') == '0.5.1'
+
+    sys.argv.append('upload')
+    monkeypatch.setenv('TRAVIS', 'true')
+    monkeypatch.setenv('TRAVIS_TAG', 'v0.5.1')
+    assert setup.verify_version('0.5.1') == '0.5.1'
