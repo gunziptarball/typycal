@@ -1,23 +1,19 @@
 language: python
-
 python:
-  - "3.6"
-
+- '3.6'
 install:
-  - pip install -r requirements.test.txt
-  - pip install tox-travis
-
+- pip install -r requirements.test.txt
+- pip install tox-travis
 script:
-  - tox
-  - coverage run --source typycal -m py.test
-  - coverage report -m
-
+- tox
+- coverage run --source typycal -m py.test
+- coverage report -m
 after_success:
-  - coveralls
-
+- coveralls
 deploy:
   provider: pypi
-  user: ???
-  password: ???
+  user: cardinal-health
+  password:
+    secure: CvqFdBAz1X1eiAcDNzzicp5cmgBz43B7qnsLFMEGqcpIW56ScXgt+Dh0gD7eWwVJLY4nc2kA7R4s4hqo45cvsY31dcxelw56vrV3WZANI1KVOCWMokYmEQm7zLcmnsn0yPMPBRKwTJd8zp7qzPd2kT8TcrTMN94/OpZm2dLKyx7HtYWFX5gkmXokXZZhDR4/FTXDuNxuvX6YkK/4poRJ/4yHP+wBjmAtK4fiUKDVQfw4VtRxNy+7pkx1poOecNfaFcUS1TbV8BYDxE9uMc/8GGP4udnuOzMy453pMpA8w+oR2JYN1teLJdRXS3GCGoR4BzxOow7Pe8dhW5/Porgk8oewQ35Uz4tW6VzEmcAoF8oReUMNJ8UTUBcirKInIfxcE+LCLhQLj065CiKEay/qYUUnGExuvEJydsLguJWTMjmYbh7p78627z0RS+SrR7IpfQ5cYwsvQpf2jihWjeb/0rvOMlMzDoaHvkvWq16HP4vt87mcLk81dTU4bfVXYDffLzIByoZGyrKe29VTd4DtlSFAOOuJY7VVUOYwA3Rl8Q6/TYJM5pHyyRReFvVw3kCBlWfyWtChuIuL4LopdFUQWmyNwntCwaxr4RVMpKzWAyiZP2Tng+wz8W9GpwDqyXrJICfUYoTrODVz5WtC4kq10Et+VBpsuZHP0xKh58b1H5g=
   on:
     tags: true
