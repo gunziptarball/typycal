@@ -10,6 +10,10 @@ Where XXXXX is the 'Issue #' referenced below.
 Change Log
 ==========
 
+Version 0.5.2
+-------------
+Added experimental support for ``typed_str`` mutability
+
 Version 0.5.0
 -------------
 
