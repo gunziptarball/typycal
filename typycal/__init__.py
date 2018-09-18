@@ -276,3 +276,8 @@ def transform_lines(cls: typing.Type[T], lines_in: typing.Union[str, typing.Iter
                 if strict:
                     raise
                 yield line
+
+
+from .environment import typed_env
+
+__all__ = ('typed_str', 'typed_dict', 'typed_env')

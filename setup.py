@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup
-import sys
 import os
 import re
+import sys
+from distutils.core import setup
 
 if sys.version_info.major < 3 or sys.version_info.minor < 6:
     raise RuntimeError("Only Python 3.6 and greater is supported.")
@@ -11,7 +11,7 @@ if sys.version_info.major < 3 or sys.version_info.minor < 6:
 with open(os.path.join(os.path.dirname(__file__), 'README.rst'), 'r') as f:
     readme = f.read()
 
-VERSION = '0.5.2'
+VERSION = '0.6.0'
 
 
 def verify_version(version: str) -> str:

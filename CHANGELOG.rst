@@ -9,6 +9,10 @@ Where XXXXX is the 'Issue #' referenced below.
 
 Change Log
 ==========
+Version 0.6.0
+-------------
+
+Introducing ``typed_env``
 
 Version 0.5.2
 -------------
