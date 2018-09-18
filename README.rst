@@ -21,17 +21,61 @@
     for this new feature.
 
 This lightweight library is for the developer who enjoys the assistance provided
-by Python's type annotations.  It offers a simple, declarative means of
-converting a plain Python dictionary or string object into a type-aware object,
-with properties to access a defined set of keys.
+by Python's type annotations.
 
-Developers working with REST APIs or any data loaded as a dictionary can use
-typycal to effectively design "contracts" with their code, and ideally end up
-with more readable software
+^^^^^^^^^^^^^
+``typed_env``
+^^^^^^^^^^^^^
+
+If your Python program relies on a custom os environment, it can be difficult to remember the string names for all those variables.  This decorator will provide a means to deal with your environment in an object-oriented fashion.
+
+>>> from typycal import typed_env
+>>> import os
+>>> import pathlib
+
+For example, say your program obtains database connection info from the environment
+
+>>> os.environ.update({'DB_HOSTNAME': 'localhost', 'DB_PORT': '3306'})
+>>> os.getenv('DB_PORT')
+'3306'
+
+You can itemize all the environment variables you use in one class
+
+>>> @typed_env
+... class Environment:
+...     DB_HOSTNAME: str
+...     DB_PORT: int
+...     DB_USER: str = 'default_user'
+...     README_PATH: pathlib.Path = 'README.rst'
+...     JSON_DATA: dict = {'foo': 'bar'}
+
+Then you can create a singleton instance for use by the rest of your program
+
+>>> env = Environment()
+
+And your variables will be typed appropriately
+
+>>> (env.DB_HOSTNAME, env.DB_PORT, env.DB_USER)
+('localhost', 3306, 'default_user')
+
+And maintained in env properly
+
+>>> os.getenv('JSON_DATA')
+'{"foo": "bar"}'
+
+You can do some neat things...
+
+>>> assert env.README_PATH.exists()
 
 ^^^^^^^^^^^^^^
 ``typed_dict``
 ^^^^^^^^^^^^^^
+
+This decorator offers a simple, declarative means of converting a plain Python dictionary or string object into a type-aware object, with properties to access a defined set of keys.
+
+Developers working with REST APIs or any data loaded as a dictionary can use typycal to effectively design "contracts" with their code, and ideally end up with more readable software
+
+That said, since the release of Python 3.7, you likely will be better served with data classes.
 
 Let's say you have a settings file sitting somewhere, and it's loaded into your
 project as a dictionary (such as `json.load`, `yaml.safe_load`, etc...):

@@ -1,6 +1,6 @@
 pytest>=3.6
 pyhamcrest>=1.9
-
+pytest-mockito==0.0.4
 check-manifest>=0.35
 coverage>=4.3.4
 coveralls>=1.1
