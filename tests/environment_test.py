@@ -1,6 +1,8 @@
 import os
 import typing
 
+import pytest
+
 import typycal
 
 
@@ -70,3 +72,24 @@ def test_typed_env_warning_on_unsupported_type(when):
     class Environment:
         # ridiculous type...
         BAD: typing.ContextManager[FileNotFoundError]
+
+
+def test_typed_env_raises_on_missing_required_vars():
+    @typycal.typed_env
+    class Environment:
+        __required_on_init__ = ('FOO', 'BAR')
+        FOO: str
+        BAR: str
+
+    with pytest.raises(OSError) as e:
+        Environment()
+    assert str(e.value) == "Variables 'FOO','BAR' are required, but have not been defined."
+
+
+def test_typed_env_raises_when_required_vars_not_declared_for_class():
+    with pytest.raises(AttributeError):
+        # noinspection PyUnusedLocal
+        @typycal.typed_env
+        class Environment:
+            __required_on_init__ = ('FOO', 'NOT_THERE')
+            FOO: str
