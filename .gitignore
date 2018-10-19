@@ -9,3 +9,5 @@ build/
 dist/
 MANIFEST
 .coverage
+doctrees/
+.buildinfo
