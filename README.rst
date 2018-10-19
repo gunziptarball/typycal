@@ -17,8 +17,10 @@
 .. note::
 
     Yes, Python 3.7 introduced data classes, which basically provide the
-    majority of features this library offers.  Future development will likely cover helpers
-    for this new feature.
+    majority of features this library offers.  Future development will likely
+    cover helpers for this new feature.
+
+    Still, there are some other cool uses for this library!
 
 This lightweight library is for the developer who enjoys the assistance provided
 by Python's type annotations.
@@ -27,13 +29,16 @@ by Python's type annotations.
 ``typed_env``
 ^^^^^^^^^^^^^
 
-If your Python program relies on a custom os environment, it can be difficult to remember the string names for all those variables.  This decorator will provide a means to deal with your environment in an object-oriented fashion.
+If your Python program relies on a custom os environment, it can be difficult to
+remember the string names for all those variables.  This decorator will provide
+a means to deal with your environment in an object-oriented fashion.
 
 >>> from typycal import typed_env
 >>> import os
 >>> import pathlib
 
-For example, say your program obtains database connection info from the environment
+For example, say your program obtains database connection info from the
+environment
 
 >>> os.environ.update({'DB_HOSTNAME': 'localhost', 'DB_PORT': '3306'})
 >>> os.getenv('DB_PORT')
@@ -67,18 +72,40 @@ You can do some neat things...
 
 >>> assert env.README_PATH.exists()
 
+If you want to enforce the presence of certain variables in your environment,
+you can add them this way
+
+>>> @typed_env
+... class StricterEnvironment:
+...     __required_on_init__ = ('NEED_ME', )
+...
+...     NEED_ME: str
+
+An error will be thrown immediately when the environment object is instantiated.
+
+>>> stricter_env = StricterEnvironment()
+Traceback (most recent call last):
+    ...
+OSError: Variable 'NEED_ME' is required, but has not been defined.
+
+
 ^^^^^^^^^^^^^^
 ``typed_dict``
 ^^^^^^^^^^^^^^
 
-This decorator offers a simple, declarative means of converting a plain Python dictionary or string object into a type-aware object, with properties to access a defined set of keys.
+This decorator offers a simple, declarative means of converting a plain Python
+dictionary or string object into a type-aware object, with properties to access
+a defined set of keys.
 
-Developers working with REST APIs or any data loaded as a dictionary can use typycal to effectively design "contracts" with their code, and ideally end up with more readable software
+Developers working with REST APIs or any data loaded as a dictionary can use
+typycal to effectively design "contracts" with their code, and ideally end up
+with more readable software
 
-That said, since the release of Python 3.7, you likely will be better served with data classes.
+That said, since the release of Python 3.7, you likely will be better served
+with data classes.
 
 Let's say you have a settings file sitting somewhere, and it's loaded into your
-project as a dictionary (such as `json.load`, `yaml.safe_load`, etc...):
+project as a dictionary (such as ``json.load``, ``yaml.safe_load``, etc...):
 
 .. code:: json
 
@@ -94,9 +121,9 @@ project as a dictionary (such as `json.load`, `yaml.safe_load`, etc...):
 
 
 ...let's say this configuration gets real messy real quick.  It can be a
-real pain to have to remember the names of all your keys for what
-becomes a Python `dict`.  So, here's an easy way to wrap your project's
-configuration in a type-aware object
+real pain to have to remember the names of all your keys for what becomes a
+Python ``dict``.  So, here's an easy way to wrap your project's configuration in
+a type-aware object
 
 >>> from typycal import typed_dict
 >>> @typed_dict
@@ -128,14 +155,16 @@ True
 >>> config.db.port == 5432
 True
 
-See that?  Even though you passed a string for the port, because you explicitly defined the type, it was cast for you!
-Now, let's try to access a missing property
+See that?  Even though you passed a string for the port, because you explicitly
+defined the type, it was cast for you! Now, let's try to access a missing
+property
 
 >>> config.db.use_ssl is None
 True
 
-Note, an AttributeError wasn't raised because by default, `typed_dict` will decorate your class so that any unset
-values which you have declared a type for will be set to `None`  You can disable this as follows
+Note, an AttributeError wasn't raised because by default, ``typed_dict`` will
+decorate your class so that any unset values which you have declared a type for
+will be set to ``None``  You can disable this as follows
 
 >>> @typed_dict(initialize_with_none=False)
 ... class StricterConfig(dict):
@@ -147,15 +176,16 @@ Traceback (most recent call last):
     ...
 AttributeError: 'StricterConfig' object has no attribute 'bar'
 
-This makes the object-like treatment of the `dict` behave closer to how Python would yell at you about accessing
-missing object attributes.
+This makes the object-like treatment of the `dict` behave closer to how Python
+would yell at you about accessing missing object attributes.
 
 ^^^^^^^^^^^^^
 ``typed_str``
 ^^^^^^^^^^^^^
 
-Another handy thing this library gives you is a way to quickly validate a string with a regex, and then store the group
-match values as attributes on the str, and access them.  Here's a (roughly) complete example
+Another handy thing this library gives you is a way to quickly validate a string
+with a regex, and then store the group match values as attributes on the str,
+and access them.  Here's a (roughly) complete example
 
 
 >>> model_pattern = r"([0-9]{4}) (Ford|Toyota) (.+)"
@@ -188,20 +218,20 @@ You can provide a template string as well to support (kinda) mutability.
 
 >>> @typed_str(r'^([0-9]+) things', 'qty', template='{qty} things')
 ... class Things(str):
-...     qty:int
+...     qty: int
 
 >>> things = Things('20 things')
 >>> things.qty = 50
 >>> things
 50 things
 
-Note however, this only changes the behavior of ``__str__`` and ``__repr__``.  See the comparison of
-the "new" value vs the original string value:
+Note however, this only changes the behavior of ``__str__`` and ``__repr__``.
+See the comparison of the "new" value vs the original string value:
 
 >>> things == '50 things', things == '20 things'
 (False, True)
 
-...so you'll need to explicity cast
+...so you'll need to explicitly cast
 
 >>> str(things) == '50 things'
 True

@@ -9,6 +9,12 @@ Where XXXXX is the 'Issue #' referenced below.
 
 Change Log
 ==========
+Version 0.7.0
+-------------
+
+Added enforcement of required environment variables using
+``__required_on_init__`` for ``typed_env``
+
 Version 0.6.0
 -------------
 
