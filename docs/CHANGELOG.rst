@@ -1,5 +1,6 @@
-Release Notes
-=============
+Change Log
+==========
+
 All bugs/feature details can be found at:
 
    https://github.com/cardinal-health/typycal/issues/XXXXX
@@ -7,8 +8,6 @@ All bugs/feature details can be found at:
 
 Where XXXXX is the 'Issue #' referenced below.
 
-Change Log
-==========
 Version 0.7.0
 -------------
 

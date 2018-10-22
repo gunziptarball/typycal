@@ -9,6 +9,17 @@ _MetaType = getattr(typing, '_GenericAlias', getattr(typing, 'GenericMeta', None
 
 # noinspection PyPep8Naming
 class typed_str:
+    """
+    Decorate a subclass of ``str`` with properties which access named
+    groups in a given regular expression
+
+    :param pattern: The regular expression to match
+    :param attrs: Names of the attributes, in order of groups. Required if
+           ``pattern`` does not use named groups.
+    :param template: (experimental) Python formatting used to reconstruct
+           the string from its properties.
+    """
+
     def __init__(self, pattern: str, *attrs, template: str = None):
         self.pattern = re.compile(pattern)
         self.template = template
@@ -101,6 +112,16 @@ class typed_str:
 
 # noinspection PyPep8Naming
 class typed_dict(object):
+    """
+    Decorates a subclass of ``dict``, turning it into a "Data Class" of sorts,
+    while preserving underlying dictionary behavior.
+
+    :param strict: If ``True``, any writes to a property with a non-matching
+                   type will raise ``TypeError``
+    :param initialize_with_none: If ``True`` (the default), dictionaries missing
+           values for declared keys will be set to ``None``.
+    """
+
     def __new__(cls, *args, **kwargs) -> typing.Union['typed_dict', typing.Type[dict]]:
         if len(args) == 1 and isinstance(args[0], type) and len(kwargs) == 0:
             # allow decorator to be used without instantiation.
@@ -133,7 +154,7 @@ class typed_dict(object):
         return getter
 
     def _create_typed_setter(self, attr_name: str, attr_type: typing.Optional[typing.Type]) -> typing.Callable[
-            [dict, typing.Any], None]:
+        [dict, typing.Any], None]:
         def setter(this: dict, val: typing.Any):
             if val is not None and attr_type is not None and not isinstance(val, attr_type):
                 if self.strict:
@@ -168,7 +189,6 @@ class typed_dict(object):
 
 
 class KeyedProperty(property):
-
     def __init__(self, key: str, doc: typing.Optional[str] = '', default: typing.Any = None, missing_keys_as_null=True):
         """
         Provides a way to give dictionary objects property-based access.

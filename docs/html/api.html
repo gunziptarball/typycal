@@ -1,0 +1,517 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API &mdash; typycal 0.7.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Change Log" href="CHANGELOG.html" />
+    <link rel="prev" title="typycal – A handy tool to make type-aware classes" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> typycal
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.7.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#typed-env-object-oriented-os-environment"><code class="docutils literal notranslate"><span class="pre">typed_env</span></code> – Object-Oriented OS Environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#typed-dict-dictionaries-with-type-annotated-accessors"><code class="docutils literal notranslate"><span class="pre">typed_dict</span></code> – Dictionaries with type-annotated accessors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#typed-str-adding-typed-accessors-to-parts-of-strings"><code class="docutils literal notranslate"><span class="pre">typed_str</span></code> – Adding typed accessors to parts of strings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">Change Log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">typycal</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="typed-env-object-oriented-os-environment">
+<h2><code class="docutils literal notranslate"><span class="pre">typed_env</span></code> – Object-Oriented OS Environment<a class="headerlink" href="#typed-env-object-oriented-os-environment" title="Permalink to this headline">¶</a></h2>
+<p>If your Python program relies on a custom os environment, it can be difficult to
+remember the string names for all those variables.  This decorator will provide
+a means to deal with your environment in an object-oriented fashion.</p>
+<dl class="class">
+<dt id="typycal.typed_env">
+<em class="property">class </em><code class="descclassname">typycal.</code><code class="descname">typed_env</code><span class="sig-paren">(</span><em>environ: Dict[str</em>, <em>str] = None</em><span class="sig-paren">)</span><a class="headerlink" href="#typycal.typed_env" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorate a class to act as a proxy for accessing OS environment variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>environ</strong> – <p>If provided, the values in the given dictionary will be
+used instead of <code class="docutils literal notranslate"><span class="pre">os.environ</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Limited use-cases apply, and this feature may be
+deprecated in the future.</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typycal</span> <span class="k">import</span> <span class="n">typed_env</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pathlib</span>
+</pre></div>
+</div>
+<p>For example, say your program obtains database connection info from the
+environment</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;DB_HOSTNAME&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;DB_PORT&#39;</span><span class="p">:</span> <span class="s1">&#39;3306&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;DB_PORT&#39;</span><span class="p">)</span>
+<span class="go">&#39;3306&#39;</span>
+</pre></div>
+</div>
+<p>You can itemize all the environment variables you use in one class</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_env</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">Environment</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">DB_HOSTNAME</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>    <span class="n">DB_PORT</span><span class="p">:</span> <span class="nb">int</span>
+<span class="gp">... </span>    <span class="n">DB_USER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;default_user&#39;</span>
+<span class="gp">... </span>    <span class="n">README_PATH</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span> <span class="o">=</span> <span class="s1">&#39;README.rst&#39;</span>
+<span class="gp">... </span>    <span class="n">JSON_DATA</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="s1">&#39;bar&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Then you can create a singleton instance for use by the rest of your program</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And your variables will be typed appropriately</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">DB_HOSTNAME</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">DB_PORT</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">DB_USER</span><span class="p">)</span>
+<span class="go">(&#39;localhost&#39;, 3306, &#39;default_user&#39;)</span>
+</pre></div>
+</div>
+<p>And maintained in env properly</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;JSON_DATA&#39;</span><span class="p">)</span>
+<span class="go">&#39;{&quot;foo&quot;: &quot;bar&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>You can do some neat things…</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">env</span><span class="o">.</span><span class="n">README_PATH</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you want to enforce the presence of certain variables in your environment,
+you can add them this way</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_env</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">StricterEnvironment</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">__required_on_init__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;NEED_ME&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">NEED_ME</span><span class="p">:</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<p>An error will be thrown immediately when the environment object is instantiated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stricter_env</span> <span class="o">=</span> <span class="n">StricterEnvironment</span><span class="p">()</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">OSError</span>: <span class="n">Variable &#39;NEED_ME&#39; is required, but has not been defined.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="typed-dict-dictionaries-with-type-annotated-accessors">
+<h2><code class="docutils literal notranslate"><span class="pre">typed_dict</span></code> – Dictionaries with type-annotated accessors<a class="headerlink" href="#typed-dict-dictionaries-with-type-annotated-accessors" title="Permalink to this headline">¶</a></h2>
+<p>This decorator offers a simple, declarative means of converting a plain Python
+dictionary or string object into a type-aware object, with properties to access
+a defined set of keys.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Yes, Python 3.7 introduced data classes, which basically provide the
+majority of features this library offers.  Future development will likely
+cover helpers for this new feature.</p>
+<p class="last">Still, there are some other cool uses for this library!</p>
+</div>
+<dl class="class">
+<dt id="typycal.typed_dict">
+<em class="property">class </em><code class="descclassname">typycal.</code><code class="descname">typed_dict</code><span class="sig-paren">(</span><em>strict: bool = False</em>, <em>initialize_with_none=True</em><span class="sig-paren">)</span><a class="headerlink" href="#typycal.typed_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorates a subclass of <code class="docutils literal notranslate"><span class="pre">dict</span></code>, turning it into a “Data Class” of sorts,
+while preserving underlying dictionary behavior.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>strict</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, any writes to a property with a non-matching
+type will raise <code class="docutils literal notranslate"><span class="pre">TypeError</span></code></li>
+<li><strong>initialize_with_none</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), dictionaries missing
+values for declared keys will be set to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="id1">
+<h3>Usage<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Developers working with REST APIs or any data loaded as a dictionary can use
+typycal to effectively design “contracts” with their code, and ideally end up
+with more readable software</p>
+<p>That said, since the release of Python 3.7, you likely will be better served
+with data classes.</p>
+<p>Let’s say you have a settings file sitting somewhere, and it’s loaded into your
+project as a dictionary (such as <code class="docutils literal notranslate"><span class="pre">json.load</span></code>, <code class="docutils literal notranslate"><span class="pre">yaml.safe_load</span></code>, etc…):</p>
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;db&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="s2">&quot;maxwell&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="s2">&quot;SECRET&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;port&quot;</span><span class="p">:</span> <span class="s2">&quot;5432&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;use_ssl&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;log_level&quot;</span><span class="p">:</span> <span class="s2">&quot;DEBUG&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>…let’s say this configuration gets real messy real quick.  It can be a
+real pain to have to remember the names of all your keys for what becomes a
+Python <code class="docutils literal notranslate"><span class="pre">dict</span></code>.  So, here’s an easy way to wrap your project’s configuration in
+a type-aware object</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typycal</span> <span class="k">import</span> <span class="n">typed_dict</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_dict</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">DBConfig</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>   <span class="n">password</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>   <span class="n">port</span><span class="p">:</span> <span class="nb">int</span>
+<span class="gp">... </span>   <span class="n">use_ssl</span><span class="p">:</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_dict</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">ProjectConfig</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">log_level</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>    <span class="n">db</span><span class="p">:</span> <span class="n">DBConfig</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;db&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>            <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="s1">&#39;maxwell&#39;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s1">&#39;SECRET&#39;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="s1">&#39;port&#39;</span><span class="p">:</span> <span class="s1">&#39;5432&#39;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">},</span>
+<span class="gp">... </span>    <span class="s1">&#39;log_level&#39;</span><span class="p">:</span> <span class="s1">&#39;DEBUG&#39;</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">ProjectConfig</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">username</span> <span class="o">==</span> <span class="s1">&#39;maxwell&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">port</span> <span class="o">==</span> <span class="mi">5432</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>See that?  Even though you passed a string for the port, because you explicitly
+defined the type, it was cast for you! Now, let’s try to access a missing
+property</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">use_ssl</span> <span class="ow">is</span> <span class="kc">None</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Note, an AttributeError wasn’t raised because by default, <code class="docutils literal notranslate"><span class="pre">typed_dict</span></code> will
+decorate your class so that any unset values which you have declared a type for
+will be set to <code class="docutils literal notranslate"><span class="pre">None</span></code>  You can disable this as follows</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_dict</span><span class="p">(</span><span class="n">initialize_with_none</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">StricterConfig</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="gp">... </span>       <span class="n">foo</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>       <span class="n">bar</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">StricterConfig</span><span class="p">({</span><span class="s1">&#39;foo&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span><span class="o">.</span><span class="n">bar</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">AttributeError</span>: <span class="n">&#39;StricterConfig&#39; object has no attribute &#39;bar&#39;</span>
+</pre></div>
+</div>
+<p>This makes the object-like treatment of the <cite>dict</cite> behave closer to how Python
+would yell at you about accessing missing object attributes.</p>
+</div>
+</div>
+<div class="section" id="typed-str-adding-typed-accessors-to-parts-of-strings">
+<h2><code class="docutils literal notranslate"><span class="pre">typed_str</span></code> – Adding typed accessors to parts of strings<a class="headerlink" href="#typed-str-adding-typed-accessors-to-parts-of-strings" title="Permalink to this headline">¶</a></h2>
+<p>Another handy thing this library gives you is a way to quickly validate a string
+with a regex, and then store the group match values as attributes on the str,
+and access them.  Here’s a (roughly) complete example</p>
+<dl class="class">
+<dt id="typycal.typed_str">
+<em class="property">class </em><code class="descclassname">typycal.</code><code class="descname">typed_str</code><span class="sig-paren">(</span><em>pattern: str</em>, <em>*attrs</em>, <em>template: str = None</em><span class="sig-paren">)</span><a class="headerlink" href="#typycal.typed_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorate a subclass of <code class="docutils literal notranslate"><span class="pre">str</span></code> with properties which access named
+groups in a given regular expression</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pattern</strong> – The regular expression to match</li>
+<li><strong>attrs</strong> – Names of the attributes, in order of groups. Required if
+<code class="docutils literal notranslate"><span class="pre">pattern</span></code> does not use named groups.</li>
+<li><strong>template</strong> – (experimental) Python formatting used to reconstruct
+the string from its properties.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="section" id="id2">
+<h3>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model_pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;([0-9]</span><span class="si">{4}</span><span class="s2">) (Ford|Toyota) (.+)&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typycal</span> <span class="k">import</span> <span class="n">typed_str</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_str</span><span class="p">(</span><span class="n">model_pattern</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;make&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">CarModel</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+<span class="gp">... </span>       <span class="n">year</span><span class="p">:</span> <span class="nb">int</span>
+<span class="gp">... </span>       <span class="n">make</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>       <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_str</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;color&gt;[A-Za-z]+) (?P&lt;model&gt;.+)&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">Car</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">color</span><span class="p">:</span> <span class="nb">str</span>
+<span class="gp">... </span>    <span class="n">model</span><span class="p">:</span> <span class="n">CarModel</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_car</span> <span class="o">=</span> <span class="n">Car</span><span class="p">(</span><span class="s1">&#39;Brown 1985 Ford Crown Victoria&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can get attributes for the matches!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_car</span><span class="o">.</span><span class="n">color</span> <span class="o">==</span> <span class="s2">&quot;Brown&quot;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Nesting and types are honored as well!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_car</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">1985</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>You can provide a template string as well to support (kinda) mutability.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@typed_str</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^([0-9]+) things&#39;</span><span class="p">,</span> <span class="s1">&#39;qty&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{qty}</span><span class="s1"> things&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">class</span> <span class="nc">Things</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">qty</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">things</span> <span class="o">=</span> <span class="n">Things</span><span class="p">(</span><span class="s1">&#39;20 things&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">things</span><span class="o">.</span><span class="n">qty</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">things</span>
+<span class="go">50 things</span>
+</pre></div>
+</div>
+<p>Note however, this only changes the behavior of <code class="docutils literal notranslate"><span class="pre">__str__</span></code> and <code class="docutils literal notranslate"><span class="pre">__repr__</span></code>.
+See the comparison of the “new” value vs the original string value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">things</span> <span class="o">==</span> <span class="s1">&#39;50 things&#39;</span><span class="p">,</span> <span class="n">things</span> <span class="o">==</span> <span class="s1">&#39;20 things&#39;</span>
+<span class="go">(False, True)</span>
+</pre></div>
+</div>
+<p>…so you’ll need to explicitly cast</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">things</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;50 things&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="CHANGELOG.html" class="btn btn-neutral float-right" title="Change Log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="typycal – A handy tool to make type-aware classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Fuse @ Cardinal Health
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

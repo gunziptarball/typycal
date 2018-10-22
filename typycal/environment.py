@@ -16,6 +16,17 @@ _SET_XFORMS: typing.Dict[type, typing.Callable[[typing.Any], str]] = {
 
 
 class typed_env:
+    """
+    Decorate a class to act as a proxy for accessing OS environment variables.
+
+    :param environ: If provided, the values in the given dictionary will be
+                    used instead of ``os.environ``.
+
+                    .. note::
+
+                        Limited use-cases apply, and this feature may be
+                        deprecated in the future.
+    """
     def _environ(self, name: str,
                  attr_type: type,
                  default: str = None):
