@@ -11,3 +11,5 @@ MANIFEST
 .coverage
 doctrees/
 .buildinfo
+.venv/
+.vscode/
