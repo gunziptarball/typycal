@@ -49,11 +49,11 @@ class typed_env:
     def __init__(self, environ: typing.Dict[str, str] = None) -> None:
         self._environ_bag = environ or os.environ
 
-    def _wrap_init(self, init):
+    def _wrap_decorated_instance_init(self, init):
 
         @functools.wraps(init)
-        def wrapper(obj, *args, **kwargs):
-            required_envs_on_init = getattr(obj, '__required_on_init__', None)
+        def wrapper(decorated_instance, *args, **kwargs):
+            required_envs_on_init = getattr(decorated_instance, '__required_on_init__', None)
             if required_envs_on_init is not None:
                 missing_vars = self._find_missing(required_envs_on_init)
                 if missing_vars:
@@ -62,7 +62,7 @@ class typed_env:
                     else:
                         var_list = "','".join(missing_vars)
                         raise EnvironmentError(f"Variables '{var_list}' are required, but have not been defined.")
-            init(obj, *args, **kwargs)
+            init(decorated_instance, *args, **kwargs)
 
         return wrapper
 
@@ -85,7 +85,7 @@ class typed_env:
             accessor = self._environ(attr_name, attr_type, getattr(cls, attr_name, None))
             setattr(cls, attr_name, accessor)
 
-        setattr(cls, '__init__', self._wrap_init(cls.__init__))
+        setattr(cls, '__init__', self._wrap_decorated_instance_init(cls.__init__))
         return cls
 
     def _find_missing(self, required_vars: typing.Collection[str]) -> typing.List[str]:

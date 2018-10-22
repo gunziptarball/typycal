@@ -133,7 +133,7 @@ class typed_dict(object):
         return getter
 
     def _create_typed_setter(self, attr_name: str, attr_type: typing.Optional[typing.Type]) -> typing.Callable[
-        [dict, typing.Any], None]:
+            [dict, typing.Any], None]:
         def setter(this: dict, val: typing.Any):
             if val is not None and attr_type is not None and not isinstance(val, attr_type):
                 if self.strict:
